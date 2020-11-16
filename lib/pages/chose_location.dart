@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
+import 'dart:convert';
 
 class Chose_location extends StatefulWidget {
   @override
@@ -9,9 +11,8 @@ class _Chose_locationState extends State<Chose_location> {
 
 
   void getData () async{
-     await Future.delayed(Duration(seconds: 3),(){
-     print('skrrr');
-    });
+    Response response = await get('https://jsonplaceholder.typicode.com/todos/1');
+    print( jsonDecode(response.body));
   }
 
   @override
