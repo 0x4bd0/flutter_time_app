@@ -15,7 +15,6 @@ class _HomeState extends State<Home> {
   WorldTime worldTime;
   Map data;
   String location = '';
-  String urlPath = '';
   String img = 'day.jpeg';
 
   void _timer(worldTime) {
@@ -43,7 +42,6 @@ class _HomeState extends State<Home> {
 
     data = ModalRoute.of(context).settings.arguments;
     worldTime = data['worldTime'];
-    urlPath = data['urlPath'];
     location = data['location'];
 
     this.setState(() {
@@ -53,7 +51,7 @@ class _HomeState extends State<Home> {
       seconds = worldTime.seconds;
     });
 
-    img = worldTime.isDayTime == false ? 'day.jpeg' : 'night.jpg';
+    img = worldTime.isDayTime ? 'day.jpeg' : 'night.jpg';
 
     return Scaffold(
       body : SafeArea(
@@ -71,7 +69,14 @@ class _HomeState extends State<Home> {
                 mainAxisAlignment : MainAxisAlignment.center,
                 children: [       
                 Text('$hours:$minuts:$seconds',style: TextStyle(fontSize: 80)),
-                Text('$location, $urlPath',style: TextStyle(fontSize: 20)),         
+                Text('$location',style: TextStyle(fontSize: 20)),  
+                SizedBox(height:30),
+                FloatingActionButton(onPressed: (){
+                  Navigator.pushNamed(context, '/chose_location');
+                }, 
+                child: 
+                Icon(Icons.location_on, color: Colors.black),
+                )      
                 ]
                 ,)
                 ,)

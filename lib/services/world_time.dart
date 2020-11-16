@@ -6,16 +6,16 @@ class WorldTime {
   String location;
   String time;
   String flag;
-  String urlPath;
   DateTime original;
   int hours;
   int minuts;
   int seconds;
   bool isDayTime;
+  Map data;
 
 
 
-  WorldTime({this.location,this.flag,this.urlPath});
+  WorldTime({this.location,this.flag});
 
   
     Future<void> addSecond() async{
@@ -38,10 +38,15 @@ class WorldTime {
 
    Response response;
 
-   response = await get('http://worldtimeapi.org/api/timezone/$location/$urlPath');
+    if(location != null){
+      response = await get('http://worldtimeapi.org/api/timezone/$location');
+       data = jsonDecode(response.body);
+    } else {
+      response = await get('http://worldtimeapi.org/api/ip');
+       data = jsonDecode(response.body);
+      location = data['timezone'];
+    }
 
-
-   Map data = jsonDecode(response.body);
    
    String hoursDiffStr = data['utc_offset'].substring(1,3);
    int hoursDiff = int.parse(hoursDiffStr);

@@ -9,18 +9,15 @@ class Loading extends StatefulWidget {
 
 class _LoadingState extends State<Loading> {
 
-  String location = 'Africa';
-  String urlPath = 'Algiers';
-
+  String location;
 
   void setupWorldTime () async{
-  WorldTime worldTime = WorldTime(location : location,flag:'algeria.png', urlPath: urlPath);
+  WorldTime worldTime = WorldTime(location : location,flag:'algeria.png');
   
   await worldTime.getTime();
     Navigator.pushReplacementNamed(context, '/home',arguments: {
         'worldTime' : worldTime,
-        'location' : location,
-        'urlPath' : urlPath
+        'location' : worldTime.location,
     });
 
     
@@ -35,6 +32,7 @@ class _LoadingState extends State<Loading> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       body : SafeArea(
       child: 
