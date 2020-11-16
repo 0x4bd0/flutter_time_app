@@ -16,6 +16,7 @@ class _HomeState extends State<Home> {
   Map data;
   String location = '';
   String urlPath = '';
+  String img = 'day.jpeg';
 
   void _timer(worldTime) {
     Future.delayed(Duration(seconds: 1)).then((_) {
@@ -52,17 +53,27 @@ class _HomeState extends State<Home> {
       seconds = worldTime.seconds;
     });
 
+    img = worldTime.isDayTime == false ? 'day.jpeg' : 'night.jpg';
+
     return Scaffold(
       body : SafeArea(
-                child: 
+                child: Container(
+                  decoration: BoxDecoration(
+                    image : DecorationImage(
+                      image : AssetImage('assets/$img'),
+                      fit : BoxFit.cover
+                    )
+                  ),
+                child:                 
                 Center(
                 child: 
                 Column(
                 mainAxisAlignment : MainAxisAlignment.center,
                 children: [       
                 Text('$hours:$minuts:$seconds',style: TextStyle(fontSize: 80)),
-                Text('$location, $urlPath'),         
+                Text('$location, $urlPath',style: TextStyle(fontSize: 20)),         
                 ]
+                ,)
                 ,)
                 ,)
                 ,)

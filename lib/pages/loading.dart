@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_time_app/services/world_time.dart'; 
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class Loading extends StatefulWidget {
   @override
   _LoadingState createState() => _LoadingState();
 }
-
 
 class _LoadingState extends State<Loading> {
 
@@ -40,9 +40,10 @@ class _LoadingState extends State<Loading> {
       child: 
       Center(
       child: 
-      Text('Loading ...',style: TextStyle(
-        fontSize: 80,
-      ),)
+      SpinKitRing(
+        color: Colors.black,
+        size: 50.0,
+      )
       ,)
       ,)
     );

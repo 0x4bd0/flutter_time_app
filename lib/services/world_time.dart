@@ -11,6 +11,7 @@ class WorldTime {
   int hours;
   int minuts;
   int seconds;
+  bool isDayTime;
 
 
 
@@ -26,6 +27,8 @@ class WorldTime {
           minuts = original.minute;
           hours = original.hour;
           seconds = original.second;
+
+          isDayTime = hours > 6 && hours < 20 ? true : false;
       
     }
 
@@ -53,6 +56,8 @@ class WorldTime {
    minuts = now.minute;
    hours = now.hour;
    seconds = now.second;
+   
+   isDayTime = hours > 6 && hours < 20 ? true : false;
 
     }
     catch(err) {
