@@ -21,9 +21,6 @@ class WorldTime {
 
           original = original.add(Duration(seconds: 1));
 
-          print(original);
-
-
           time = original.toString();
 
           minuts = original.minute;

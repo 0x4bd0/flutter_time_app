@@ -14,6 +14,8 @@ class _HomeState extends State<Home> {
   int seconds = 00;
   WorldTime worldTime;
   Map data;
+  String location = '';
+  String urlPath = '';
 
   void _timer(worldTime) {
     Future.delayed(Duration(seconds: 1)).then((_) {
@@ -40,6 +42,8 @@ class _HomeState extends State<Home> {
 
     data = ModalRoute.of(context).settings.arguments;
     worldTime = data['worldTime'];
+    urlPath = data['urlPath'];
+    location = data['location'];
 
     this.setState(() {
       time = worldTime.time; 
@@ -53,10 +57,15 @@ class _HomeState extends State<Home> {
                 child: 
                 Center(
                 child: 
-                Text('$hours:$minuts:$seconds',style: TextStyle(
-                  fontSize: 80,
-                ),)
+                Column(
+                mainAxisAlignment : MainAxisAlignment.center,
+                children: [       
+                Text('$hours:$minuts:$seconds',style: TextStyle(fontSize: 80)),
+                Text('$location, $urlPath'),         
+                ]
                 ,)
-                ,));
+                ,)
+                ,)
+                ,);
   }
 }
