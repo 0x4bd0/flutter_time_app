@@ -7,31 +7,65 @@ class WorldTime {
   String time;
   String flag;
   String urlPath;
+  DateTime original;
   int hours;
   int minuts;
+  int seconds;
 
 
 
   WorldTime({this.location,this.flag,this.urlPath});
 
   
+    Future<void> addSecond() async{
+
+          original = original.add(Duration(seconds: 1));
+
+          print(original);
+
+
+          time = original.toString();
+
+          minuts = original.minute;
+          hours = original.hour;
+          seconds = original.second;
+      
+    }
+
   Future<void> getTime() async{
 
-   Response response = await get('http://worldtimeapi.org/api/timezone/$location/$urlPath');
+    try {
+
+   Response response;
+
+   response = await get('http://worldtimeapi.org/api/timezone/$location/$urlPath');
+
 
    Map data = jsonDecode(response.body);
    
-   String hours_diff_str = data['utc_offset'].substring(1,3);
-   int hours_diff = int.parse(hours_diff_str);
+   String hoursDiffStr = data['utc_offset'].substring(1,3);
+   int hoursDiff = int.parse(hoursDiffStr);
 
    DateTime now = DateTime.parse(data['datetime']);
-   now.add(Duration(hours:hours_diff));
-
+   now.add(Duration(hours:hoursDiff));
+   
+   original = now;
 
    time = now.toString();
 
    minuts = now.minute;
    hours = now.hour;
+   seconds = now.second;
+
+    }
+    catch(err) {
+
+      time = 'Oups, something went wrong';
+
+    }
+
+
+
 
 
   }
