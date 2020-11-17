@@ -51,8 +51,9 @@ class WorldTime {
    String hoursDiffStr = data['utc_offset'].substring(1,3);
    int hoursDiff = int.parse(hoursDiffStr);
 
-   DateTime now = DateTime.parse(data['datetime']);
-   now.add(Duration(hours:hoursDiff));
+
+   DateTime now = DateTime.parse(data['utc_datetime']);
+   now = now.add(Duration(hours:hoursDiff));
    
    original = now;
 
@@ -61,7 +62,8 @@ class WorldTime {
    minuts = now.minute;
    hours = now.hour;
    seconds = now.second;
-   
+
+
    isDayTime = hours > 6 && hours < 20 ? true : false;
 
     }

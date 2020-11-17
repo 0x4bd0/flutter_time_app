@@ -9,22 +9,22 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
   String time = 'Loading ...';
-  int hours = 00;
-  int minuts = 00;
-  int seconds = 00;
+  String hours = "00";
+  String minuts = "00";
+  String seconds = "00";
   WorldTime worldTime;
-  Map data;
+  Map data = {};
   String location = '';
   String img = 'day.jpeg';
 
   void _timer(worldTime) {
     Future.delayed(Duration(seconds: 1)).then((_) {
       worldTime.addSecond();
-      setState(() {
+      this.setState(() {
       time = worldTime.time; 
-      hours = worldTime.hours;
-      minuts = worldTime.minuts;
-      seconds = worldTime.seconds;
+      hours = worldTime.hours.toString().padLeft(2, '0');
+      minuts = worldTime.minuts.toString().padLeft(2, '0');
+      seconds = worldTime.seconds.toString().padLeft(2, '0');
       });
       _timer(worldTime);
     });
@@ -40,16 +40,18 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
 
-    data = ModalRoute.of(context).settings.arguments;
-    worldTime = data['worldTime'];
-    location = data['location'];
+    data = data.isNotEmpty ? data :ModalRoute.of(context).settings.arguments;
 
-    this.setState(() {
-      time = worldTime.time; 
-      hours = worldTime.hours;
-      minuts = worldTime.minuts;
-      seconds = worldTime.seconds;
-    });
+      worldTime = data['worldTime'];
+      location = data['location'];
+
+
+      this.setState(() {
+        time = worldTime.time; 
+        hours = worldTime.hours.toString().padLeft(2, '0');
+        minuts = worldTime.minuts.toString().padLeft(2, '0');
+        seconds = worldTime.seconds.toString().padLeft(2, '0');
+      });
 
     img = worldTime.isDayTime ? 'day.jpeg' : 'night.jpg';
 
@@ -71,8 +73,11 @@ class _HomeState extends State<Home> {
                 Text('$hours:$minuts:$seconds',style: TextStyle(fontSize: 80)),
                 Text('$location',style: TextStyle(fontSize: 20)),  
                 SizedBox(height:30),
-                FloatingActionButton(onPressed: (){
-                  Navigator.pushNamed(context, '/chose_location');
+                FloatingActionButton(onPressed: () async{
+                  dynamic result = await Navigator.pushNamed(context, '/chose_location');
+                    this.setState(() {
+                      data = result;
+                    });                 
                 }, 
                 child: 
                 Icon(Icons.location_on, color: Colors.black),
